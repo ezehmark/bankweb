@@ -3,7 +3,7 @@ import './App.css'
 
 function App() {
 
-const[clickedItem,setClickedItem]=useState("");
+const[clickedItem,setClickedItem]=useState<number | null>(null);
   return (
     <><div className="outer">
     <div className="top">
