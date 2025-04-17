@@ -22,7 +22,6 @@ function App() {
 
     <div className="transactions">
     {[{id:1,amount:"$4000",tId:"2504D56A",type:"In"},{id:2,amount:"$20,000",tId:"2504G5A",type:"In"},{id:3,amount:"$10,000",tId:"2504D76B",type:"Out"}].map((item,index)=>{
-	    const isClicked = clickedItem == item.id;
 	    return(<>
 		   <div key={index} onClick={()=>{setClickedItem(item.id)}}className="tbox">
 		   <div className="success">Success:{item.type}</div>
