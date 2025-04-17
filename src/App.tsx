@@ -3,7 +3,6 @@ import './App.css'
 
 function App() {
 
-  const[clickedItem,setClickedItem]=useState("");
 
   return (
     <><div className="outer">
