@@ -32,27 +32,27 @@ setSol(mySolValue.toLocaleString("en-us"));
 
   const handleAnim1 = () => {
     if (topRef.current && button2Ref.current) {
-      topRef.current.classList.remove("animClass");
-      void topRef.current.offsetWidth;
-      topRef.current.classList.add("animClass");
+      topRef.current?.classList.remove("animClass");
+      void topRef.current?.offsetWidth;
+      topRef.current?.classList.add("animClass");
       setTimeout(() => {
-        topRef.current.classList.remove("animClass2");
-        button2Ref.current.classList.toggle("button2-show");
+        topRef.current?.classList.remove("animClass2");
+        button2Ref.current?.classList.toggle("button2-show");
       }, 4000);
     }
   };
 
   const handleAnim2 = () => {
     if (topRef.current && button2Ref.current) {
-      button2Ref.current.style.backgroundColor = "#ef9800";
-      topRef.current.classList.remove("animClass2");
+      button2Ref.current?.style.backgroundColor = "#ef9800";
+      topRef.current?.classList.remove("animClass2");
 
-      topRef.current.classList.add("animClass2");
+      topRef.current?.classList.add("animClass2");
       setTimeout(() => {
-        topRef.current.classList.remove("animClass");
+        topRef.current?.classList.remove("animClass");
       }, 4000);
       setTimeout(() => {
-        button2Ref.current.classList.toggle("button2-show");
+        button2Ref.current?.classList.toggle("button2-show");
       }, 100);
     }
   };
