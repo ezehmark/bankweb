@@ -5,10 +5,10 @@ function App() {
   const topRef = useRef<HTMLDivElement>(null);
   const button2Ref = useRef<HTMLDivElement>(null);
   const [prices, setPrices] = useState({});
-  const [total, setTotal] = useState(1300450);
-  const [btc, setBtc] = useState(900000);
-  const [eth, setEth] = useState(300000);
-  const [sol, setSol] = useState(250000);
+  const [total,setTotal] = useState(1300450);
+  const [btc, setBtc] = useState("900000");
+  const [eth, setEth] = useState("300000");
+  const [sol, setSol] = useState("250000");
 
 
 
@@ -22,6 +22,8 @@ setPrices(data);
 const myBtcValue = Number(data.bitcoin)*12;
 const myEthValue = Number(data.ethereum)*120;
 const mySolValue = Number(data.solana)*500;
+const totaValue = myBtcValue + myEthValue + mySolValue;
+setTotal(totalValue);
 
 setBtc(myBtcValue.toLocaleString("en-us"));
 setEth(myEthValue.toLocaleString("en-us"));
@@ -29,7 +31,7 @@ setSol(mySolValue.toLocaleString("en-us"));
 }},[]);
 
   const handleAnim1 = () => {
-    if (topRef.current) {
+    if (topRef.current && button2Ref.current) {
       topRef.current.classList.remove("animClass");
       void topRef.current.offsetWidth;
       topRef.current.classList.add("animClass");
@@ -41,7 +43,7 @@ setSol(mySolValue.toLocaleString("en-us"));
   };
 
   const handleAnim2 = () => {
-    if (topRef.current) {
+    if (topRef.current && button2Ref.current) {
       button2Ref.current.style.backgroundColor = "#ef9800";
       topRef.current.classList.remove("animClass2");
 
