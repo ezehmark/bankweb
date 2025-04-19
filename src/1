@@ -1,0 +1,84 @@
+import './App.css'
+
+function App() {
+
+  return (
+    <>
+    <div className="container">
+    <div className="outer">
+
+
+    <div className="perspective">
+    <div className="top">
+    <div className="crypto-face">
+    <div className="total">1,300,400USDT</div>
+    <div className="wallet">Crypto Wallet</div>
+    <div className="coins-list">
+    <div className="coin">
+    <div className="logo"><img src="https://i.postimg.cc/7L1GY17c/download-3.png"/></div>
+    <div className="coin-name"><b style={{color:"red",fontSize:10}}>12</b>BTC</div>
+    <div className="price">~ 960,000 USDT</div>
+    </div>
+
+    <div className="coin">
+    <div className="logo"><img src="https://i.postimg.cc/PqqWcF0y/Ethereum-logo.png"
+/></div>                                   
+    <div className="coin-name"><b style={{color:"red",fontSize:10}}>120</b>ETH</div>
+    <div className="price">~ 360,000 USDT</div>                   </div>
+
+    <div className="coin">
+    <div className="logo"><img style={{width:"120%"}}src="https://i.postimg.cc/dV6R5KND/Solana-Logo.png"/></div>                                    <div className="coin-name"><b style={{color:"red",fontSize:10}}>500</b>SOL</div>
+    <div className="price"> ~ 400,000USDT</div>                   </div>
+
+
+    </div>
+    </div>
+    <div className="balance">
+    <div className="bal-txt">Balance</div>
+    <div className="bal-amount">$ 1,245,600</div>
+    </div>
+    <div className="profile">
+    <div className="dp"></div>
+    <div style={{justifyContent:"space-between",gap:2,flexDirection:"column",alignItems:"center"}}>
+    <div className="name">Onyekachi Banks</div>
+    <div className="verified">Verified ID</div>
+    </div>
+    </div>
+
+    </div>
+
+
+    </div>
+
+    <div style={{width:"85%",justifyContent:"space-between",display:"flex",gap:5,flexDirection:"row"}}>
+    <div className="deposit">Deposit</div>
+    <div className="withdraw">Withdraw</div>
+    </div>
+
+    <div className="transactions">
+    <div style={{fontSize:10,marginRight:10,}}>Transactions history</div>
+    {[{id:1,amount:"$40,000",status:"✔️",tId:"2504D56A...",type:"Credit"},
+	    {id:2,amount:"$300,000",status:"✔️",tId:"2504G5A...",type:"Debit"},
+	    {id:3,amount:"$106,000",status:"✔️",tId:"2504D76B...",type:"Credit"},
+    {id:4,amount:"$200,000",status:"✔️",tId:"2504D76B...",type:"Credit"}
+    ].map((item,index)=>{
+		    const isTop = item.id == 1;
+		    const isBottom = item.id == 4; 
+
+	    return(<>
+		   <div key={index} style={{borderTopLeftRadius:isTop?15:2,borderTopRightRadius:isTop?15:2,borderBottomLeftRadius:isBottom?20:2,borderBottomRightRadius:isBottom?20:2}}className="tbox">
+		   <div className="status">{item.status}</div>
+		   <div className="alert">{item.type}</div>
+		   <div className="amount">{item.amount}</div>
+		   <div className="tId">{item.tId}</div>
+		   </div>
+		   </>)
+    })}
+    </div>
+    </div>
+    </div>
+    </>
+  )
+}
+
+export default App
