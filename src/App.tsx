@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const topRef = useRef<HTMLDivElement>(null);
   const button2Ref = useRef<HTMLDivElement>(null);
-  const [prices, setPrices] = useState({});
+  const [prices, setPrices] = useState<{bitcoin?:string;ethereum?:string;solana?:string}>({});
   const [total,setTotal] = useState(1300450);
   const [btc, setBtc] = useState("900000");
   const [eth, setEth] = useState("300000");
@@ -22,7 +22,7 @@ setPrices(data);
 const myBtcValue = Number(data.bitcoin)*12;
 const myEthValue = Number(data.ethereum)*120;
 const mySolValue = Number(data.solana)*500;
-const totaValue = myBtcValue + myEthValue + mySolValue;
+const totalValue = myBtcValue + myEthValue + mySolValue;
 setTotal(totalValue);
 
 setBtc(myBtcValue.toLocaleString("en-us"));
