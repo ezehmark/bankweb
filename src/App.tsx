@@ -163,15 +163,15 @@ setSol(mySolValue.toLocaleString("en-us"));
             </div>
             <div className="ticker1">
               <div>BTC</div>
-              <div>{prices.bitcoin? || "Loading..."}</div>
+              <div>{prices?.bitcoin || "Loading..."}</div>
             </div>
             <div className="ticker1">
               <div>ETH</div>
-              <div>{prices.ethereum?}</div>
+              <div>{prices?.ethereum}</div>
             </div>
             <div className="ticker1">
               <div>SOL</div>
-              <div>{prices.solana?}</div>
+              <div>{prices?.solana}</div>
             </div>
             <div
               style={{
