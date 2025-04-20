@@ -10,9 +10,10 @@ function App() {
   const [eth, setEth] = useState("300000");
   const [sol, setSol] = useState("250000");
 
-  const [btcPrice, setBtcPrice] = useState("85000");
-  const [ethPrice, setEthPrice] = useState("1800");
-  const [solPrice, setSolPrice] = useState("140");
+  const [btcPrice, setBtcPrice] = useState<string | null>(null);
+  const [ethPrice, setEthPrice] = useState<string | null>(null);
+  const [solPrice, setSolPrice] = useState<string | null>(null);
+
 
 
 
@@ -208,15 +209,15 @@ return ()=>ws.close()
             </div>
             <div className="ticker1">
               <div>BTC</div>
-              <div>{Number(btcPrice).toLocaleString("en-us")}</div>
+              <div>{btcPrice == null?"Loading..." : Number(btcPrice).toLocaleString("en-us")}</div>
             </div>
             <div className="ticker1">
               <div>ETH</div>
-              <div>{Number(ethPrice).toLocaleString("en-us")}</div>
+              <div>{ethPrice==null?"Loading...":Number(ethPrice).toLocaleString("en-us")}</div>
             </div>
             <div className="ticker1">
               <div>SOL</div>
-              <div>{Number(solPrice).toLocaleString("en-us")}</div>
+              <div>{solPrice==null?"Loading...":Number(solPrice).toLocaleString("en-us")}</div>
             </div>
             <div
               style={{

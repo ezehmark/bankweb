@@ -418,6 +418,7 @@ img {
   display: flex;
   position: relative;
   padding: 4px 15px;
+  font-size:14px;
   background-color: #5a3600;
 }
 .table-title {
