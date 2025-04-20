@@ -17,7 +17,7 @@ function App() {
 
 
 
-const apiPricesRef = useRef<{bitcoin?:{usd:number};ethereum?:{usd:number};solana?:{usd:number}}>({});
+const apiPricesRef = useRef<{bitcoin?:{usd:string};ethereum?:{usd:string};solana?:{usd:string}}>({});
 const getPrices = async()=>{
 try{
 	const response =await axios.get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd");
