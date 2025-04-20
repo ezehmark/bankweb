@@ -41,9 +41,12 @@ const ws = new WebSocket("wss://wss.coincap.io/prices?assets=bitcoin,ethereum,so
 ws.onmessage =(info)=>{
 const data = JSON.parse(info.data);
 
-const btcLive = data.bitcoin || apiPricesRef.current.bitcoin?.usd.toString() || btcPrice;
-const ethLive = data.ethereum || apiPricesRef.current.ethereum?.usd.toString() || ethPrice;
-const solLive = data.solana || apiPricesRef.current.solana?.usd.toString() || solPrice;
+if(apiPricesRef.current){
+const apiPricesReff = apiPricesRef.current;
+
+const btcLive = data.bitcoin || apiPricesReff.bitcoin?.usd.toString() || btcPrice;
+const ethLive = data.ethereum || apiPricesReff.ethereum?.usd.toString() || ethPrice;
+const solLive = data.solana || apiPricesReff.solana?.usd.toString() || solPrice;
 
 setBtcPrice(btcLive);
 setEthPrice(ethLive);
@@ -59,7 +62,7 @@ setTotal(totalValue);
 
 setBtc(myBtcValue);
 setEth(myEthValue);
-setSol(mySolValue);
+setSol(mySolValue);}
 
 }
 return ()=>ws.close()
