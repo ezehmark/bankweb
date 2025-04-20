@@ -17,16 +17,14 @@ function App() {
 
 
 
-const apiPricesRef = useRef({});
-  const[apiPrices,setApiPrices]=useState({});
+const apiPricesRef = useRef<{bitcoin?:string;ethereum?:string;solana?:string}>({});
 const getPrices = async()=>{
 try{
-	const response =await axios.get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd");
-const data = response.data;
+	const response =await axios.get("https://mybackend-oftz.onrender.com/prices");
+const data = response.data.data;
 
 
 
-      setApiPrices(data);
       apiPricesRef.current = data;
       setBtcPrice(data.bitcoin?.usd.toString());
       setEthPrice(data.ethereum?.usd.toString());
@@ -37,7 +35,7 @@ const data = response.data;
 catch(error){console.error("Getting prices via Api failed",error)}
      }
 
-useEffect(()=>{                                                         const myInterval = setInterval(()=>{                    getPrices()},5000);                                             return()=>clearInterval(myInterval);                            },[]);	
+useEffect(()=>{                                                         const myInterval = setInterval(()=>{                    getPrices()},6000);                                             return()=>clearInterval(myInterval);                            },[]);	
 
 useEffect(()=>{
 const ws = new WebSocket("wss://wss.coincap.io/prices?assets=bitcoin,ethereum,solana");	
@@ -131,7 +129,7 @@ return ()=>ws.close()
                     </div>
                     <div className="price">
                       ~ {btc.toLocaleString("en-us")}
-                      <b style={{ fontSize: 10 }}>USDT</b>
+                      <b style={{ fontSize: 10 }}> USDT</b>
                     </div>
                   </div>
 
@@ -145,7 +143,7 @@ return ()=>ws.close()
                     </div>
                     <div className="price">
                       ~ {eth.toLocaleString("en-us")}
-                      <b style={{ fontSize: 10 }}>USDT</b>
+                      <b style={{ fontSize: 10 }}> USDT</b>
                     </div>
                   </div>
 
@@ -167,7 +165,7 @@ return ()=>ws.close()
                     </div>
                     <div className="price">
                       ~ {sol.toLocaleString("en-us")}
-                      <b style={{ fontSize: 10 }}>USDT</b>
+                      <b style={{ fontSize: 10 }}> USDT</b>
                     </div>
                   </div>
                 </div>
