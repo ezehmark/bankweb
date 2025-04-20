@@ -59,7 +59,7 @@ const myEthValue = Number(ethLive)*120;
 const mySolValue = Number(solLive)*500;
 const totalValue = myBtcValue + myEthValue + mySolValue;
 
-setTotal(totalValue);
+setTotal(totalValue.toString());
 
 setBtc(myBtcValue.toString());
 setEth(myEthValue.toString());
