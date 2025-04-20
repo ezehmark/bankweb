@@ -61,9 +61,9 @@ const totalValue = myBtcValue + myEthValue + mySolValue;
 
 setTotal(totalValue);
 
-setBtc(myBtcValue);
-setEth(myEthValue);
-setSol(mySolValue);}
+setBtc(myBtcValue.toString());
+setEth(myEthValue.toString());
+setSol(mySolValue.toString());}
 
 }
 return ()=>ws.close()
@@ -130,7 +130,7 @@ return ()=>ws.close()
                       <b style={{ fontWeight:"normal", fontSize: 10 }}>12 </b>BTC
                     </div>
                     <div className="price">
-                      ~ {btc.toLocaleString("en-us")}
+                      ~ {Number(btc).toLocaleString("en-us")}
                       <b style={{ fontSize: 10 }}> USDT</b>
                     </div>
                   </div>
@@ -144,7 +144,7 @@ return ()=>ws.close()
                       <b style={{ fontWeight:"normal", fontSize: 10 }}>120 </b>ETH
                     </div>
                     <div className="price">
-                      ~ {eth.toLocaleString("en-us")}
+                      ~ {Number(eth).toLocaleString("en-us")}
                       <b style={{ fontSize: 10 }}> USDT</b>
                     </div>
                   </div>
@@ -166,7 +166,7 @@ return ()=>ws.close()
                       <b style={{ fontWeight:"normal", fontSize: 10 }}>500 </b>SOL
                     </div>
                     <div className="price">
-                      ~ {sol.toLocaleString("en-us")}
+                      ~ {Number(sol).toLocaleString("en-us")}
                       <b style={{ fontSize: 10 }}> USDT</b>
                     </div>
                   </div>
