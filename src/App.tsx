@@ -5,7 +5,6 @@ import "./App.css";
 function App() {
   const topRef = useRef<HTMLDivElement>(null);
   const button2Ref = useRef<HTMLDivElement>(null);
-  const [prices, setPrices] = useState<{bitcoin?:string;ethereum?:string;solana?:string}>({});
   const [total,setTotal] = useState("1300450");
   const [btc, setBtc] = useState("900000");
   const [eth, setEth] = useState("300000");
@@ -17,7 +16,7 @@ function App() {
 
 
 
-const apiPricesRef = useRef<{bitcoin?:string;ethereum?:string;solana?:string}>({});
+const apiPricesRef = useRef<{bitcoin?:number;ethereum?:number;solana?:number}>({});
 const getPrices = async()=>{
 try{
 	const response =await axios.get("https://mybackend-oftz.onrender.com/prices");
@@ -41,7 +40,6 @@ useEffect(()=>{
 const ws = new WebSocket("wss://wss.coincap.io/prices?assets=bitcoin,ethereum,solana");	
 ws.onmessage =(info)=>{
 const data = JSON.parse(info.data);
-setPrices(data);
 
 const btcLive = data.bitcoin || apiPricesRef.current.bitcoin?.usd.toString() || btcPrice;
 const ethLive = data.ethereum || apiPricesRef.current.ethereum?.usd.toString() || ethPrice;
