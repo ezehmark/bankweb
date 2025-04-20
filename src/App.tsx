@@ -113,7 +113,7 @@ return ()=>ws.close()
               </div>
               <div className="crypto-face">
                 <div className="total">{Number(total).toLocaleString("en-us")} USD</div>
-                <div className="wallet">Crypto Wallet</div>
+                <div className="wallet">Crypto wallet</div>
                 <div className="coins-list">
                   <div
                     className="coin"
