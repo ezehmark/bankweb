@@ -19,8 +19,8 @@ function App() {
 const apiPricesRef = useRef<{bitcoin?:number;ethereum?:number;solana?:number}>({});
 const getPrices = async()=>{
 try{
-	const response =await axios.get("https://mybackend-oftz.onrender.com/prices");
-const data = response.data.data;
+	const response =await axios.get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd");
+const data = response.data;
 
 
 
