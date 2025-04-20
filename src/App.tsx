@@ -1,34 +1,74 @@
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import "./App.css";
 
 function App() {
   const topRef = useRef<HTMLDivElement>(null);
   const button2Ref = useRef<HTMLDivElement>(null);
   const [prices, setPrices] = useState<{bitcoin?:string;ethereum?:string;solana?:string}>({});
-  const [total,setTotal] = useState(1300450);
+  const [total,setTotal] = useState("1300450");
   const [btc, setBtc] = useState("900000");
   const [eth, setEth] = useState("300000");
   const [sol, setSol] = useState("250000");
 
+  const [btcPrice, setBtcPrice] = useState("85000");
+  const [ethPrice, setEthPrice] = useState("1800");
+  const [solPrice, setSolPrice] = useState("140");
 
 
-const ws = new WebSocket("wss://ws.coincap.io/prices?assets=bitcoin,ethereum,solana");
+
+const apiPricesRef = useRef({});
+  const[apiPrices,setApiPrices]=useState({});
+const getPrices = async()=>{
+try{
+	const response =await axios.get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd");
+const data = response.data;
+
+
+
+      setApiPrices(data);
+      apiPricesRef.current = data;
+      setBtcPrice(data.bitcoin?.usd.toString());
+      setEthPrice(data.ethereum?.usd.toString());
+      setSolPrice(data.solana?.usd.toString());
+
+      console.log("fetched api calls successfully");
+}
+catch(error){console.error("Getting prices via Api failed",error)}
+     }
+
+useEffect(()=>{                                                         const myInterval = setInterval(()=>{                    getPrices()},5000);                                             return()=>clearInterval(myInterval);                            },[]);	
 
 useEffect(()=>{
+const ws = new WebSocket("wss://wss.coincap.io/prices?assets=bitcoin,ethereum,solana");	
 ws.onmessage =(info)=>{
 const data = JSON.parse(info.data);
 setPrices(data);
 
-const myBtcValue = Number(data.bitcoin)*12;
-const myEthValue = Number(data.ethereum)*120;
-const mySolValue = Number(data.solana)*500;
+const btcLive = data.bitcoin || apiPricesRef.current.bitcoin?.usd.toString() || btcPrice;
+const ethLive = data.ethereum || apiPricesRef.current.ethereum?.usd.toString() || ethPrice;
+const solLive = data.solana || apiPricesRef.current.solana?.usd.toString() || solPrice;
+
+setBtcPrice(btcLive);
+setEthPrice(ethLive);
+setSolPrice(solLive);
+
+
+const myBtcValue = Number(btcLive)*12;
+const myEthValue = Number(ethLive)*120;                   
+const mySolValue = Number(solLive)*500;
 const totalValue = myBtcValue + myEthValue + mySolValue;
+
 setTotal(totalValue);
 
-setBtc(myBtcValue.toLocaleString("en-us"));
-setEth(myEthValue.toLocaleString("en-us"));
-setSol(mySolValue.toLocaleString("en-us"));
-}},[]);
+setBtc(myBtcValue);
+setEth(myEthValue);
+setSol(mySolValue);
+
+}
+return ()=>ws.close()
+},[]);
+
 
   const handleAnim1 = () => {
     if (topRef.current && button2Ref.current) {
@@ -73,7 +113,7 @@ setSol(mySolValue.toLocaleString("en-us"));
                 See coins
               </div>
               <div className="crypto-face">
-                <div className="total">{total} USD</div>
+                <div className="total">{Number(total).toLocaleString("en-us")} USD</div>
                 <div className="wallet">Crypto Wallet</div>
                 <div className="coins-list">
                   <div
@@ -90,7 +130,7 @@ setSol(mySolValue.toLocaleString("en-us"));
                       <b style={{ fontWeight:"normal", fontSize: 10 }}>12 </b>BTC
                     </div>
                     <div className="price">
-                      ~ {btc}
+                      ~ {btc.toLocaleString("en-us")}
                       <b style={{ fontSize: 10 }}>USDT</b>
                     </div>
                   </div>
@@ -104,7 +144,7 @@ setSol(mySolValue.toLocaleString("en-us"));
                       <b style={{ fontWeight:"normal", fontSize: 10 }}>120 </b>ETH
                     </div>
                     <div className="price">
-                      ~ {eth}
+                      ~ {eth.toLocaleString("en-us")}
                       <b style={{ fontSize: 10 }}>USDT</b>
                     </div>
                   </div>
@@ -126,7 +166,7 @@ setSol(mySolValue.toLocaleString("en-us"));
                       <b style={{ fontWeight:"normal", fontSize: 10 }}>500 </b>SOL
                     </div>
                     <div className="price">
-                      ~ {sol}
+                      ~ {sol.toLocaleString("en-us")}
                       <b style={{ fontSize: 10 }}>USDT</b>
                     </div>
                   </div>
@@ -169,15 +209,15 @@ setSol(mySolValue.toLocaleString("en-us"));
             </div>
             <div className="ticker1">
               <div>BTC</div>
-              <div>{prices?.bitcoin || "Loading..."}</div>
+              <div>{Number(btcPrice).toLocaleString("en-us")}</div>
             </div>
             <div className="ticker1">
               <div>ETH</div>
-              <div>{prices?.ethereum}</div>
+              <div>{Number(ethPrice).toLocaleString("en-us")}</div>
             </div>
             <div className="ticker1">
               <div>SOL</div>
-              <div>{prices?.solana}</div>
+              <div>{Number(solPrice).toLocaleString("en-us")}</div>
             </div>
             <div
               style={{
@@ -188,6 +228,7 @@ setSol(mySolValue.toLocaleString("en-us"));
                 display: "flex",
                 width: "100%",
                 height: 40,
+		color:"#291900",
                 backgroundColor: "#c77700",
               }}
             >
