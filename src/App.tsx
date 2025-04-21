@@ -21,8 +21,10 @@ const btcPriceRef = useRef<string | null>(null);
 const ethPriceRef = useRef<string | null>(null);
 const solPriceRef = useRef<string | null>(null);
 
+const API_KEY ="d9bbb9c22fa2553ad23fd9e95430ce31f26565427716b263fcc82b3565e90d8a";
+
 useEffect(()=>{
-const ws = new WebSocket("wss://wss.coincap.io/prices?assets=bitcoin,ethereum,solana");	
+const ws = new WebSocket(`wss://wss.coincap.io/prices?assets=bitcoin,ethereum,solana&apiKey=${API_KEY}`);	
 ws.onmessage =(info)=>{
 const data = JSON.parse(info.data);
 
