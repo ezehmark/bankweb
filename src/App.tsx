@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import "./App.css";
 
 function App() {
@@ -17,41 +16,36 @@ function App() {
 
 
 
-const apiPricesRef = useRef<{bitcoin?:{usd:string};ethereum?:{usd:string};solana?:{usd:string}}>({});
-const getPrices = async()=>{
-try{
-	const response =await axios.get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd");
-const data = response.data;
 
-
-
-      apiPricesRef.current = data;
-      setBtcPrice(data.bitcoin?.usd.toString());
-      setEthPrice(data.ethereum?.usd.toString());
-      setSolPrice(data.solana?.usd.toString());
-
-      console.log("fetched api calls successfully");
-}
-catch(error){console.error("Getting prices via Api failed",error)}
-     }
-
-useEffect(()=>{                                                         const myInterval = setInterval(()=>{                    getPrices()},6000);                                             return()=>clearInterval(myInterval);                            },[]);	
+const btcPriceRef = useRef<string | null>(null);
+const ethPriceRef = useRef<string | null>(null);
+const solPriceRef = useRef<string | null>(null);
 
 useEffect(()=>{
 const ws = new WebSocket("wss://wss.coincap.io/prices?assets=bitcoin,ethereum,solana");	
 ws.onmessage =(info)=>{
 const data = JSON.parse(info.data);
 
-if(apiPricesRef.current){
-const apiPricesReff = apiPricesRef.current;
 
-const btcLive = data.bitcoin || apiPricesReff.bitcoin?.usd.toString() || btcPrice;
-const ethLive = data.ethereum || apiPricesReff.ethereum?.usd.toString() || ethPrice;
-const solLive = data.solana || apiPricesReff.solana?.usd.toString() || solPrice;
 
+const btcLive = data.bitcoin || btcPriceRef.current;
+const ethLive = data.ethereum || ethPriceRef.current;
+const solLive = data.solana || solPriceRef.current;
+
+if(btcLive && !isNaN(parseFloat(btcLive))){
 setBtcPrice(btcLive);
+btcPriceRef.current = btcLive;
+else{
+console.log("❌ WS returned empty data for bitcoin as", data.bitcoin)}
+
+if(ethLive && !isNaN(parseFloat(ethLive))){
 setEthPrice(ethLive);
+ethPriceRef.current = ethLive}
+
+if(solLive && !isNaN(parseFloat(solLive))){
 setSolPrice(solLive);
+solPriceRef.current=solLive}
+
 
 
 const myBtcValue = Number(btcLive)*12;
@@ -65,7 +59,7 @@ setBtc(myBtcValue.toString());
 setEth(myEthValue.toString());
 setSol(mySolValue.toString());}
 
-}
+
 return ()=>ws.close()
 },[]);
 
