@@ -40,7 +40,7 @@ function App() {
 
       if (myData.topic?.startsWith("publicTrade") && myData.data.length > 0) {
         const symbol = myData.topic.split(".")[1];
-        const price = parseFloat(myData.data[0].p.toString());
+        const price = myData.data[0].p;
 
         setPrices((prev) => ({ ...prev, [symbol]: price }));
 
