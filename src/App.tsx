@@ -18,9 +18,12 @@ function App() {
   const btcPriceRef = useRef<string | null>(null);
   const ethPriceRef = useRef<string | null>(null);
   const solPriceRef = useRef<string | null>(null);
+useEffect(() => {
+  let myWs: WebSocket;
+  let updateTimeout: ReturnType<typeof setTimeout>;
 
-  useEffect(() => {
-    const myWs = new WebSocket("wss://stream.bybitglobal.com/v5/public/spot");
+  const updatePrices = () => {
+    myWs = new WebSocket("wss://stream.bybitglobal.com/v5/public/spot");
 
     myWs.onopen = () => {
       myWs.send(
@@ -31,7 +34,7 @@ function App() {
             "publicTrade.ETHUSDT",
             "publicTrade.SOLUSDT",
           ],
-        }),
+        })
       );
     };
 
@@ -44,14 +47,14 @@ function App() {
 
         setPrices((prev) => ({ ...prev, [symbol]: price }));
 
-        const liveBtc = symbol == "BTCUSDT" ? price : prices?.BTCUSDT || btcPriceRef.current;
-        const liveEth = symbol=="ETHUSDT" ? price : prices?.ETHUSDT || ethPriceRef.current;
-        const liveSol = symbol=="SOLUSDT" ? price : prices?.SOLUSDT || solPriceRef.current;
+        const liveBtc = symbol === "BTCUSDT" ? price : prices?.BTCUSDT || btcPriceRef.current;
+        const liveEth = symbol === "ETHUSDT" ? price : prices?.ETHUSDT || ethPriceRef.current;
+        const liveSol = symbol === "SOLUSDT" ? price : prices?.SOLUSDT || solPriceRef.current;
 
         if (liveBtc && !isNaN(parseFloat(liveBtc))) {
           btcPriceRef.current = liveBtc;
           setBtcPrice(liveBtc);
-	  console.log("BTCUSDT price updated using Bybit ws, as",liveBtc)
+          console.log("BTCUSDT price updated using Bybit ws, as", liveBtc);
         }
 
         if (liveEth && !isNaN(parseFloat(liveEth))) {
@@ -70,14 +73,29 @@ function App() {
         const totalValue = myBtcValue + myEthValue + mySolValue;
 
         setTotal(totalValue.toString());
-
         setBtc(myBtcValue.toString());
         setEth(myEthValue.toString());
         setSol(mySolValue.toString());
       }
     };
-    return () => myWs.close();
-  }, []);
+
+    myWs.onclose = () => {
+      console.warn("WebSocket disconnected. Reconnecting in 4s...");
+      updateTimeout = setTimeout(updatePrices, 4000);
+    };
+
+    myWs.onerror = () => {
+      myWs.close(); // trigger reconnect
+    };
+  };
+
+  updatePrices();
+
+  return () => {
+    if (myWs) myWs.close();
+    if (updateTimeout) clearTimeout(updateTimeout);
+  };
+}, []);
 
   const handleAnim1 = () => {
     if (topRef.current && button2Ref.current) {
