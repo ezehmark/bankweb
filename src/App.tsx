@@ -35,7 +35,7 @@ const solLive = data.solana || solPriceRef.current;
 if(btcLive && !isNaN(parseFloat(btcLive))){
 setBtcPrice(btcLive);
 btcPriceRef.current = btcLive;
-console.log("✅ WS has updated bitcoin price, as" btcLive)}
+console.log("✅ WS has updated bitcoin price, as", btcLive)}
 else{
 console.log("❌ WS returned empty data for bitcoin as", data.bitcoin)}
 
