@@ -9,7 +9,7 @@ function App() {
   const [eth, setEth] = useState("300000");
   const [sol, setSol] = useState("250000");
 
-  const[prices,setPrices]=useState({BTCUSDT:null,ETHUSDT:null,SOLUSDT:null});
+  const[prices,setPrices]=useState<{[key:string]:string |null}>({BTCUSDT:null,ETHUSDT:null,SOLUSDT:null});
 
   const [btcPrice, setBtcPrice] = useState<string | null>(null);
   const [ethPrice, setEthPrice] = useState<string | null>(null);
