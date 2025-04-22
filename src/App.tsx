@@ -9,11 +9,6 @@ function App() {
   const [eth, setEth] = useState("300000");
   const [sol, setSol] = useState("250000");
 
-  const [prices, setPrices] = useState<{ [key: string]: string | null }>({
-    BTCUSDT: null,
-    ETHUSDT: null,
-    SOLUSDT: null,
-  });
 
   const [btcPrice, setBtcPrice] = useState<string | null>(null);
   const [ethPrice, setEthPrice] = useState<string | null>(null);
@@ -63,7 +58,7 @@ function App() {
           if (symbol === "BTCUSDT") {
             const prev = btcPriceRef.current
               ? parseFloat(btcPriceRef.current)
-              : null;
+              : 0;
             const currentP = parseFloat(price);
             if (currentP < prev) setBtcColor("#ffe0b2");
             else if (currentP > prev) setBtcColor("#feb819");
@@ -79,7 +74,7 @@ function App() {
           if (symbol === "ETHUSDT") {
             const prev = ethPriceRef.current
               ? parseFloat(ethPriceRef.current)
-              : null;
+              : 0;
             const currentP = parseFloat(price);
             if (currentP > prev) {
               setEthColor("#feb819");
@@ -99,7 +94,7 @@ function App() {
           if (symbol === "SOLUSDT") {
             const prev = solPriceRef.current
               ? parseFloat(solPriceRef.current)
-              : null;
+              : 0;
             const currentP = parseFloat(price);
             if (currentP > prev) {
               setSolColor("#feb819");
