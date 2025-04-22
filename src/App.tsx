@@ -59,10 +59,10 @@ function App() {
               ? parseFloat(btcPriceRef.current)
               : 0;
             const currentP = parseFloat(price);
-            if (currentP < prev) setBtcColor("#ffe0b2");
+            if (currentP < prev) setBtcColor("#e5300");
             else if (currentP > prev) setBtcColor("#feb819");
             else {
-              setBtcColor("white");
+              setBtcColor("#ccc");
             }
             btcPriceRef.current = price;
             setBtcPrice(price);
@@ -79,9 +79,9 @@ function App() {
             if (currentP > prev) {
               setEthColor("#feb819");
             } else if (currentP < prev) {
-              setEthColor("#ffe0b2");
+              setEthColor("#ec5300");
             } else {
-              setEthColor("white");
+              setEthColor("#ccc");
             }
 
             setEthPrice(price);
@@ -99,9 +99,9 @@ function App() {
             if (currentP > prev) {
               setSolColor("#feb819");
             } else if (currentP < prev) {
-              setSolColor("#ffe0b2");
+              setSolColor("#ec5300");
             } else {
-              setSolColor("white");
+              setSolColor("#ccc");
             }
             setSolPrice(price);
             solPriceRef.current = price;
@@ -287,7 +287,12 @@ function App() {
           <div className="live-tickers">
             <div className="table-title">
               <div>Coins</div>
-              <div>Price</div>
+
+
+              <div style={{display:"flex",justifyContent:"space-between",gap:2,alignItems:"center",flexDirection:"row"}}>
+	      <div>Price</div>
+	      <div style={{borderRadius:2,alignItems:'center',padding:"2px 2px 2px 3px",border:"1px solid #5a3600",fontSize:10}}>  USDT<b style={{filter:"grayscale(30%)"}}>🔻</b></div>
+	      </div>
             </div>
             <div className="ticker1">
               <div>BTC</div>
@@ -296,6 +301,9 @@ function App() {
                   ? "Loading..."
                   : Number(btcPrice).toLocaleString("en-us")}
               </div>
+
+
+
             </div>
             <div className="ticker1">
               <div>ETH</div>
