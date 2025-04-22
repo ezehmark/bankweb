@@ -128,6 +128,7 @@
   flex-direction: row;
   gap: 5px;
   width: 90%;
+  position:relative;
   background-color: #ffe0b2;
 }
 .logo {
@@ -149,6 +150,8 @@ img {
 .coin-name {
   color: #5a3600;
   font-weight: bold;
+  position:absolute;
+  transform:translate(-50%,-50%);top:50%;left:45%
 }
 .profile {
   position: absolute;

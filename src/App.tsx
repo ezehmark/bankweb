@@ -9,7 +9,11 @@ function App() {
   const [eth, setEth] = useState("300000");
   const [sol, setSol] = useState("250000");
 
-  const[prices,setPrices]=useState<{[key:string]:string |null}>({BTCUSDT:null,ETHUSDT:null,SOLUSDT:null});
+  const [prices, setPrices] = useState<{ [key: string]: string | null }>({
+    BTCUSDT: null,
+    ETHUSDT: null,
+    SOLUSDT: null,
+  });
 
   const [btcPrice, setBtcPrice] = useState<string | null>(null);
   const [ethPrice, setEthPrice] = useState<string | null>(null);
@@ -18,84 +22,131 @@ function App() {
   const btcPriceRef = useRef<string | null>(null);
   const ethPriceRef = useRef<string | null>(null);
   const solPriceRef = useRef<string | null>(null);
-useEffect(() => {
-  let myWs: WebSocket;
-  let updateTimeout: ReturnType<typeof setTimeout>;
 
-  const updatePrices = () => {
-    myWs = new WebSocket("wss://stream.bybitglobal.com/v5/public/spot");
+  const [lowerBtc, setLowerBtc] = useState(false);
+  const [lowerEth, setLowerEth] = useState(false);
+  const [lowerSol, setLowerSol] = useState(false);
 
-    myWs.onopen = () => {
-      myWs.send(
-        JSON.stringify({
-          op: "subscribe",
-          args: [
-            "publicTrade.BTCUSDT",
-            "publicTrade.ETHUSDT",
-            "publicTrade.SOLUSDT",
-          ],
-        })
-      );
-    };
+  const [btcColor, setBtcColor] = useState("white");
+  const [ethColor, setEthColor] = useState("white");
+  const [solColor, setSolColor] = useState("white");
 
-    myWs.onmessage = (info) => {
-      const myData = JSON.parse(info.data);
+  useEffect(() => {
+    let myWs: WebSocket;
+    let updateTimeout: ReturnType<typeof setTimeout>;
 
-      if (myData.topic?.startsWith("publicTrade") && myData.data.length > 0) {
-        const symbol = myData.topic.split(".")[1];
-        const price = myData.data[0].p;
+    const updatePrices = () => {
+      myWs = new WebSocket("wss://stream.bybitglobal.com/v5/public/spot");
 
-        setPrices((prev) => ({ ...prev, [symbol]: price }));
+      myWs.onopen = () => {
+        myWs.send(
+          JSON.stringify({
+            op: "subscribe",
+            args: [
+              "publicTrade.BTCUSDT",
+              "publicTrade.ETHUSDT",
+              "publicTrade.SOLUSDT",
+            ],
+          }),
+        );
+      };
 
-        const liveBtc = symbol === "BTCUSDT" ? price : prices?.BTCUSDT || btcPriceRef.current;
-        const liveEth = symbol === "ETHUSDT" ? price : prices?.ETHUSDT || ethPriceRef.current;
-        const liveSol = symbol === "SOLUSDT" ? price : prices?.SOLUSDT || solPriceRef.current;
+      myWs.onmessage = (info) => {
+        const myData = JSON.parse(info.data);
 
-        if (liveBtc && !isNaN(parseFloat(liveBtc))) {
-          btcPriceRef.current = liveBtc;
-          setBtcPrice(liveBtc);
-          console.log("BTCUSDT price updated using Bybit ws, as", liveBtc);
+        if (myData.topic?.startsWith("publicTrade") && myData.data.length > 0) {
+          const symbol = myData.topic.split(".")[1];
+          const price = myData.data[0].p;
+
+          setPrices((prev) => ({ ...prev, [symbol]: price }));
+
+          let totalBtc = 0;
+          let totalEth = 0;
+          let totalSol = 0;
+          if (symbol === "BTCUSDT") {
+            const prev = btcPriceRef.current
+              ? parseFloat(btcPriceRef.current)
+              : null;
+            const currentP = parseFloat(price);
+            if (currentP < prev) setBtcColor("#ffe0b2");
+            else if (currentP > prev) setBtcColor("#ef9800");
+            else {
+              setBtcColor("white");
+            }
+            btcPriceRef.current = price;
+            setBtcPrice(price);
+            totalBtc = Number(price) * 12;
+            setBtc(totalBtc.toString());
+          }
+
+          if (symbol === "ETHUSDT") {
+            const prev = ethPriceRef.current
+              ? parseFloat(ethPriceRef.current)
+              : null;
+            const currentP = parseFloat(price);
+            if (currentP > prev) {
+              setEthColor("#ef9800");
+            } else if (currentP < prev) {
+              setEthColor("#ffe0b2");
+            } else {
+              setEthColor("white");
+            }
+
+            setEthPrice(price);
+            ethPriceRef.current = price;
+
+            totalEth = Number(price) * 12;
+            setEth(totalEth.toString());
+          }
+
+          if (symbol === "SOLUSDT") {
+            const prev = solPriceRef.current
+              ? parseFloat(solPriceRef.current)
+              : null;
+            const currentP = parseFloat(price);
+            if (currentP > prev) {
+              setSolColor("#ef9800");
+            } else if (currentP < prev) {
+              setSolColor("#ffe0b2");
+            } else {
+              setSolColor("white");
+            }
+            setSolPrice(price);
+            solPriceRef.current = price;
+            totalSol = Number(price) * 12;
+            setSol(totalSol.toString());
+          }
+          const btcVal = btcPriceRef.current
+            ? parseFloat(btcPriceRef.current) * 12
+            : 0;
+          const ethVal = ethPriceRef.current
+            ? parseFloat(ethPriceRef.current) * 120
+            : 0;
+          const solVal = solPriceRef.current
+            ? parseFloat(solPriceRef.current) * 500
+            : 0;
+
+          const totalValue = btcVal + ethVal + solVal;
+          setTotal(totalValue.toString());
         }
+      };
 
-        if (liveEth && !isNaN(parseFloat(liveEth))) {
-          ethPriceRef.current = liveEth;
-          setEthPrice(liveEth);
-        }
+      myWs.onclose = () => {
+        console.warn("WebSocket disconnected. Reconnecting in 4s...");
+        updateTimeout = setTimeout(updatePrices, 4000);
+      };
 
-        if (liveSol && !isNaN(parseFloat(liveSol))) {
-          solPriceRef.current = liveSol;
-          setSolPrice(liveSol);
-        }
-
-        const myBtcValue = Number(liveBtc) * 12;
-        const myEthValue = Number(liveEth) * 120;
-        const mySolValue = Number(liveSol) * 500;
-        const totalValue = myBtcValue + myEthValue + mySolValue;
-
-        setTotal(totalValue.toString());
-        setBtc(myBtcValue.toString());
-        setEth(myEthValue.toString());
-        setSol(mySolValue.toString());
-      }
+      myWs.onerror = () => {
+        myWs.close(); // trigger reconnect
+      };
     };
+    updatePrices();
 
-    myWs.onclose = () => {
-      console.warn("WebSocket disconnected. Reconnecting in 4s...");
-      updateTimeout = setTimeout(updatePrices, 4000);
+    return () => {
+      if (myWs) myWs.close();
+      if (updateTimeout) clearTimeout(updateTimeout);
     };
-
-    myWs.onerror = () => {
-      myWs.close(); // trigger reconnect
-    };
-  };
-
-  updatePrices();
-
-  return () => {
-    if (myWs) myWs.close();
-    if (updateTimeout) clearTimeout(updateTimeout);
-  };
-}, []);
+  }, []);
 
   const handleAnim1 = () => {
     if (topRef.current && button2Ref.current) {
@@ -248,7 +299,7 @@ useEffect(() => {
             </div>
             <div className="ticker1">
               <div>BTC</div>
-              <div>
+              <div style={{ color: btcColor }}>
                 {btcPrice == null
                   ? "Loading..."
                   : Number(btcPrice).toLocaleString("en-us")}
@@ -256,7 +307,7 @@ useEffect(() => {
             </div>
             <div className="ticker1">
               <div>ETH</div>
-              <div>
+              <div style={{ color: ethColor }}>
                 {ethPrice == null
                   ? "Loading..."
                   : Number(ethPrice).toLocaleString("en-us")}
@@ -264,7 +315,7 @@ useEffect(() => {
             </div>
             <div className="ticker1">
               <div>SOL</div>
-              <div>
+              <div style={{ color: solColor }}>
                 {solPrice == null
                   ? "Loading..."
                   : Number(solPrice).toLocaleString("en-us")}
