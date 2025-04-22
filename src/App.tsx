@@ -50,7 +50,6 @@ function App() {
           const symbol = myData.topic.split(".")[1];
           const price = myData.data[0].p;
 
-          setPrices((prev) => ({ ...prev, [symbol]: price }));
 
           let totalBtc = 0;
           let totalEth = 0;
