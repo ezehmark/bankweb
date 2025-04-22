@@ -66,6 +66,7 @@ function App() {
             }
             btcPriceRef.current = price;
             setBtcPrice(price);
+	    console.log("Price updated live, BTCUSDT:", price);
             totalBtc = Number(price) * 12;
             setBtc(totalBtc.toString());
           }
