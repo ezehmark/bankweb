@@ -23,9 +23,6 @@ function App() {
   const ethPriceRef = useRef<string | null>(null);
   const solPriceRef = useRef<string | null>(null);
 
-  const [lowerBtc, setLowerBtc] = useState(false);
-  const [lowerEth, setLowerEth] = useState(false);
-  const [lowerSol, setLowerSol] = useState(false);
 
   const [btcColor, setBtcColor] = useState("white");
   const [ethColor, setEthColor] = useState("white");
@@ -69,7 +66,7 @@ function App() {
               : null;
             const currentP = parseFloat(price);
             if (currentP < prev) setBtcColor("#ffe0b2");
-            else if (currentP > prev) setBtcColor("#ef9800");
+            else if (currentP > prev) setBtcColor("#feb819");
             else {
               setBtcColor("white");
             }
@@ -85,7 +82,7 @@ function App() {
               : null;
             const currentP = parseFloat(price);
             if (currentP > prev) {
-              setEthColor("#ef9800");
+              setEthColor("#feb819");
             } else if (currentP < prev) {
               setEthColor("#ffe0b2");
             } else {
@@ -105,7 +102,7 @@ function App() {
               : null;
             const currentP = parseFloat(price);
             if (currentP > prev) {
-              setSolColor("#ef9800");
+              setSolColor("#feb819");
             } else if (currentP < prev) {
               setSolColor("#ffe0b2");
             } else {
