@@ -129,7 +129,7 @@
   gap: 5px;
   width: 90%;
   position:relative;
-  background-color: #ffe0b2;
+  background-color: #ffe0b2
 }
 .logo {
   height: 19px;
@@ -432,3 +432,4 @@ img {
   width: 100%;
   background-color: #ef9800;
 }
+.jprice{position:absolute;white-space:nowrap;transform:translate(-50%,-50%);top:50%;left:80%}
