@@ -31,7 +31,7 @@ const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
     <div className="loginScreen">
       <div className="titleAndLogo">
         <div className="logoC">
-          <img style={{backgroundColor:"#ccc",position:"absolute",height:"100%",width:"100%"}}src="https://i.postimg.cc/wjXGYMNZ/favicon.png" />
+          <img style={{backgroundColor:"#ccc",position:"absolute",height:"100%",width:"100%"}}src="https://i.postimg.cc/J0nFJC8h/favicon-1.png" />
         </div>
         <div className="app-name">Bank Web</div>
       </div>
