@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import "./login.css";
 
-const Login = ({toggleLogin:()=>void}) => {
+const Login = ({toggleLogin}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checker, setChecker] = useState("");
