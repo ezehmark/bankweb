@@ -3,7 +3,7 @@
   font-family: Inter, san-serif;
 }
 .container {
-  background-color: #291900;
+  background-color: white;
   height: 100vh;
   display: flex;
 
@@ -344,7 +344,7 @@ img {
   width: 95%;
   font-size: 12px;
   text-align: center;
-  color: #ef9800;
+  color: #5a3600;
   padding: 0px 0px 50px 0px;
 }
 .button1 {
@@ -394,7 +394,7 @@ img {
   position: absolute;
   top: 6px;
   left: 20px;
-  color:white;
+  color:black;
   font-weight: bold;
 }
 

@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
+import Login from "./login"
 
 function App() {
+const[login,setLogin]=useState(true);                           const toggleLogin = ()=>{setLogin(prev=>!prev)};
   const topRef = useRef<HTMLDivElement>(null);
   const button2Ref = useRef<HTMLDivElement>(null);
   const [total, setTotal] = useState("1300450");
@@ -59,7 +61,7 @@ function App() {
               ? parseFloat(btcPriceRef.current)
               : 0;
             const currentP = parseFloat(price);
-            if (currentP < prev) setBtcColor("#e5300");
+            if (currentP < prev) setBtcColor("#ec5300");
             else if (currentP > prev) setBtcColor("#feb819");
             else {
               setBtcColor("#ccc");
@@ -172,8 +174,10 @@ function App() {
   };
 
   return (
+
     <>
-      <div className="container">
+    { login && <Login toggleLogin = {toggleLogin}/>}
+    {!login && <div className="container">
         <div className="title">Bank Web</div>
         <div className="outer">
           <div className="perspective">
@@ -425,6 +429,7 @@ function App() {
           </div>
         </div>
       </div>
+    }
     </>
   );
 }
