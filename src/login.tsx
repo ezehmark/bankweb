@@ -15,7 +15,7 @@ const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
       setChecker("Wrong email format, use valid email address");
       return;
     }
-    if (email === "onyekabanks@gmail.com" && password === "#feb829") {
+    if (email === "onyekabanks@gmail.com" && password === "#feb198") {
       setChecker("You are now logged in");
       setTimeout(() => {
         toggleLogin();
