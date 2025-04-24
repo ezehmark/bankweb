@@ -47,25 +47,24 @@ const Login = (props) => {
 
         <input
           type="email"
-	  onFocus={()=>setT(true)}
+	  onFocus={()=>{setT(true);setChecker("")}}
 	  onBlur={()=>setT(false)	}
 	  style={{backgroundColor:t?"white":"#ffe0b2"}}
           className="input"
           placeholder="Enter email here..."
           value={email}
-          onChange={(e) => {setEmail(e.target.value);setChecker("")}}
+          onChange={(e) => {setEmail(e.target.value)}}
         />
 
 	{checker && <div className="checker">{checker}</div>}
 
         <input
           type="password"
-	  onFocus={()=>setT2(true)}                                        
+	  onFocus={()=>{setT2(true);setChecker("")}}                                        
 	  style={{backgroundColor:t2?"white":"#ffe0b2"}}
 	  onBlur={()=>setT2(false)}
           className="input"
           placeholder="Type your password"
-	  placeholderTextColor="red"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
@@ -87,6 +86,7 @@ const Login = (props) => {
 
 
 	</div>
+	<div style={{fontSize:8,color:"grey",position:'absolute',bottom:15}}>Courtesy @<b>BytanceTech</b> © 2025</div>
       
     </div>
   );
