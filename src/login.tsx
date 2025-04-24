@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import "./login.css"
 
-const Login = (props) => {
+const Login = ({toggleLogin:()=>void}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checker, setChecker] = useState("");
@@ -18,7 +18,7 @@ const Login = (props) => {
     if (email === "onyekabanks@gmail.com" && password === "#feb829") {
       setChecker("You are now logged in");
       setTimeout(() => {
-        props.toggleLogin();
+        toggleLogin();
       }, 2000);
     } else {
       setChecker("Wrong credentials");
