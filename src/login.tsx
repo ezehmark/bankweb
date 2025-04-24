@@ -15,7 +15,7 @@ const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
       setChecker("Wrong email format, use valid email address");
       return;
     }
-    if (email === "onyekabanks@gmail.com" && password === "#feb198") {
+    if (email === "onyekabanks@gmail.com" && password === "Onyeka4545") {
       setChecker("You are now logged in");
       setTimeout(() => {
         toggleLogin();
@@ -31,7 +31,7 @@ const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
     <div className="loginScreen">
       <div className="titleAndLogo">
         <div className="logo">
-          <img style={{position:"absolute",height:"100%",width;"100%",resizeMode:"fill"}}src="https://i.postimg.cc/wjXGYMNZ/favicon.png" />
+          <img style={{position:"absolute",height:"100%",width:"100%",resizeMode:"fill"}}src="https://i.postimg.cc/wjXGYMNZ/favicon.png" />
         </div>
         <div className="app-name">Bank Web</div>
       </div>
