@@ -30,7 +30,7 @@ const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
   return (
     <div className="loginScreen">
       <div className="titleAndLogo">
-        <div className="logo">
+        <div className="logoC">
           <img style={{position:"absolute",height:"100%",width:"100%",resizeMode:"fill"}}src="https://i.postimg.cc/wjXGYMNZ/favicon.png" />
         </div>
         <div className="app-name">Bank Web</div>
@@ -47,6 +47,7 @@ const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
 
         <input
           type="email"
+	  value={email}
 	  onFocus={()=>{setT(true);setChecker("")}}
 	  onBlur={()=>setT(false)	}
 	  style={{backgroundColor:t?"white":"#ffe0b2"}}
@@ -60,6 +61,7 @@ const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
 
         <input
           type="password"
+	  value={password}
 	  onFocus={()=>{setT2(true);setChecker("")}}                                        
 	  style={{backgroundColor:t2?"white":"#ffe0b2"}}
 	  onBlur={()=>setT2(false)}
