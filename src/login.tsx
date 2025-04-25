@@ -1,11 +1,24 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import "./login.css";
+import {useNavigate} from "react-router-dom";
 
-const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
+const Login = () => {
+const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checker, setChecker] = useState("");
+  const checkerRef = useRef<HTMLDivElement>(null);
 
+  const animateChecker=()=>{if(checkerRef.current){
+  const ch = checkerRef.current;
+  ch.classList.add("checkerAnimClass")}
+  }
+  useEffect(()=>{
+  if(checker){
+  animateChecker()}
+  },[checker]);
+  const [checkerColor,setCheckerColor]=useState("ec5300");
   const handleLogin = () => {
     if (email.length < 1) {
       setChecker("Put your email address first");
@@ -16,9 +29,10 @@ const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
       return;
     }
     if (email === "onyekabanks@gmail.com" && password === "Onyeka4545") {
+      setCheckerColor("#00ff00");
       setChecker("You are now logged in");
       setTimeout(() => {
-        toggleLogin();
+        navigate("/home");
       }, 2000);
     } else {
       setChecker("Wrong credentials");
@@ -33,15 +47,18 @@ const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
         <div className="logoC">
           <img style={{backgroundColor:"#ccc",position:"absolute",height:"100%",width:"100%"}}src="https://i.postimg.cc/J0nFJC8h/favicon-1.png" />
         </div>
-        <div className="app-name">Bank Web</div>
+        <div className="app-name"></div>
       </div>
 
 
 
-
+<div className="desc"><b style={{color:"#5a3600"}}>Hybrid</b> banking, and <b style={{color:"#ec5300"}}>blockchain.</b></div>
 
       <div className="formAndFooter">
-      <div className="desc"><b style={{color:"#5a3600"}}>Hybrid</b> banking, and <b style={{color:"#ec5300"}}>blockchain.</b></div>
+      <div className="notifyer"> Continue to app</div>
+
+      {checker &&<div ref={checkerRef} style={{backgroundColor:checkerColor}} className='checkerCover'> <div className="checker">{checker}</div></div>}
+
 
       <div className="form">
 
@@ -56,7 +73,6 @@ const Login = ({toggleLogin}:{toggleLogin:()=>void}) => {
           onChange={(e) => {setEmail(e.target.value)}}
         />
 
-	{checker && <div className="checker">{checker}</div>}
 
         <input
           type="password"
