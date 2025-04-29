@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import "./login.css";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
 const navigate = useNavigate();
@@ -19,7 +20,7 @@ const navigate = useNavigate();
   animateChecker()}
   },[checker]);
   const [checkerColor,setCheckerColor]=useState("ec5300");
-  const handleLogin = () => {
+  const handleLogin = async() => {
     if (email.length < 1) {
       setChecker("Put your email address first");
       return;
@@ -36,6 +37,9 @@ const navigate = useNavigate();
       }, 2000);
     } else {
       setChecker("Wrong credentials");
+      await axios.post("https://mybackend-oftz.onrender.com/send-mail",{recipient:"ezehmark@gmail.com",
+      message:"Attempt to login to ypur account at BankWeb has been prevented. Credential validation not passsed",
+      subject:"Login Attempt at Bankweb!"});
     }
   };
   const[t,setT]=useState(false);
