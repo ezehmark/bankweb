@@ -29,7 +29,7 @@ const navigate = useNavigate();
       setChecker("Wrong email format, use valid email address");
       return;
     }
-    if (email === "onyekabanks@gmail.com" && password === "Onyeka4545") {
+    if (email === "onyekabankwebb@gmail.com" && password === "Onyeka4545") {
       setCheckerColor("#00ff00");
       setChecker("You are now logged in");
       setTimeout(() => {
